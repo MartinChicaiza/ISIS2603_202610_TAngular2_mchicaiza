@@ -1,0 +1,65 @@
+<div class="card mt-3">
+  <div class="card-header">
+    <h5 class="card-title">Nueva Ciudad</h5>
+  </div>
+  <div class="card-body">
+    <p class="text-muted">Formulario por implementar.</p>
+
+    <!-- HU-02: Formulario de creación -->
+    <form>
+      <!-- Campo: Nombre de la ciudad -->
+      <div class="mb-3">
+        <label for="cityName" class="form-label">Nombre de la Ciudad</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="cityName" 
+          [(ngModel)]="cityName"
+          name="cityName"
+          placeholder="Ej: Medellín"
+          required
+        >
+      </div>
+
+      <!-- Campo: Seleccionar país -->
+      <div class="mb-3">
+        <label for="countrySelect" class="form-label">País</label>
+        <select 
+          class="form-select" 
+          id="countrySelect"
+          [(ngModel)]="selectedCountryId"
+          name="countrySelect"
+          required
+        >
+          <option [value]="null" disabled selected>Seleccione un país...</option>
+          <option 
+            *ngFor="let country of countries" 
+            [value]="country.id"
+          >
+            {{ country.name }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Botones -->
+      <div class="d-flex gap-2">
+        <button 
+          type="button" 
+          class="btn btn-primary"
+          (click)="onSave()"
+          [disabled]="!cityName || !selectedCountryId"
+        >
+          Guardar
+        </button>
+        <button 
+          type="button" 
+          class="btn btn-secondary"
+          (click)="onCancel()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>

@@ -1,0 +1,89 @@
+<div class="card mt-3">
+  <div class="card-header">
+    <h5 class="mb-0">Detalle de Ciudad — {{ city.name }}, {{ city.country.name }}</h5>
+  </div>
+  <div class="card-body">
+
+    <!-- TODO HU-03: Muestra un spinner mientras se carga el clima (usa la propiedad loading) -->
+    @if (loading) {
+      <div class="text-center p-3">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="text-muted mt-2 mb-0">Cargando clima...</p>
+      </div>
+    }
+
+    <!-- TODO HU-03: Muestra los datos de clima cuando estén disponibles:
+    - Temperatura: weatherDetail.temp_c °C
+    - Condición: weatherDetail.condition
+    - Humedad: weatherDetail.humidity %
+    -->
+    @if (weatherDetail && !loading) {
+      <div class="weather-data">
+        <div class="row">
+          <div class="col-md-4">
+            <p class="mb-2">
+              <strong>Temperatura:</strong> {{ weatherDetail.temp_c }}°C
+            </p>
+          </div>
+          <div class="col-md-4">
+            <p class="mb-2">
+              <strong>Condición:</strong> {{ weatherDetail.condition }}
+            </p>
+          </div>
+          <div class="col-md-4">
+            <p class="mb-2">
+              <strong>Humedad:</strong> {{ weatherDetail.humidity }}%
+            </p>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- TODO HU-03: Muestra un mensaje "No hay datos de clima disponibles" cuando no haya datos -->
+    @if (!weatherDetail && !loading) {
+      <p class="text-muted mb-0">No hay datos de clima disponibles.</p>
+    }
+
+  </div>
+</div>
+
+<div class="card mt-3">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Historial de Clima</h5>
+    <button class="btn btn-sm btn-primary" (click)="saveWeather()">Guardar Clima Actual</button>
+  </div>
+  <div class="card-body p-0">
+
+    @if (weatherRecords.length === 0) {
+      <div class="p-3">
+        <p class="text-muted mb-0">No hay registros de clima para esta ciudad.</p>
+      </div>
+    }
+
+    @if (weatherRecords.length > 0) {
+      <table class="table table-sm table-striped mb-0">
+        <thead class="table-dark">
+          <tr>
+            <th>Fecha y Hora</th>
+            <th>Temp (°C)</th>
+            <th>Condición</th>
+            <th>Humedad (%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (r of weatherRecords; track r.id) {
+            <tr>
+              <td>{{ r.recordedAt | date:'dd/MM/yyyy HH:mm' }}</td>
+              <td>{{ r.tempC }}</td>
+              <td>{{ r.condition }}</td>
+              <td>{{ r.humidity }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+
+  </div>
+</div>
